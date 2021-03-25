@@ -1,5 +1,5 @@
-/* ITUSB1 Attach Command - Version 1.0 for Debian Linux
-   Copyright (c) 2019 Samuel Lourenço
+/* ITUSB1 Attach Command - Version 1.1 for Debian Linux
+   Copyright (c) 2019-2020 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the Free
@@ -76,7 +76,7 @@ int main(int argc, char **argv)
                     set_gpio2(devhandle, false);  // Set GPIO.2 to a logical low to connect the data lines
                     usleep(100000);  // Wait 100ms so that device enumeration process can, at least, start (this is not enough to guarantee enumeration, though)
                 }
-                if (err_level == 0)  // If all goes well
+                if (err_level == EXIT_SUCCESS)  // If all goes well
                     printf("USB device attached.\n");
                 libusb_release_interface(devhandle, 0);  // Release the interface
             }

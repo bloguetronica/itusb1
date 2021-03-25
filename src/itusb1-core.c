@@ -1,5 +1,5 @@
-/* ITUSB1 core functions - Version 1.0
-   Copyright (c) 2019 Samuel Lourenço
+/* ITUSB1 core functions - Version 1.1
+   Copyright (c) 2019-2020 Samuel Lourenço
 
    This library is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published by
@@ -32,8 +32,8 @@ int err_level;
 void configure_spi_mode(libusb_device_handle *devhandle, uint8_t channel, bool csmode, uint8_t cfrq, bool cpol, bool cpha)  // Configures the given SPI channel in respect to its chip select mode, clock frequency, polarity and phase
 {
     unsigned char control_buf_out[2] = {
-        channel,                                                   // Selected channel
-        0x20 * cpha | 0x10 * cpol | 0x08 * csmode | (0x07 & cfrq)  // Control word (specified chip select mode, clock frequency, polarity and phase)
+        channel,                                                        // Selected channel
+        (uint8_t)(cpha << 5 | cpol << 4 | csmode << 3 | (0x07 & cfrq))  // Control word (specified chip select mode, clock frequency, polarity and phase)
     };
     if (libusb_control_transfer(devhandle, 0x40, 0x31, 0x0000, 0x0000, control_buf_out, sizeof(control_buf_out), TR_TIMEOUT) != sizeof(control_buf_out))
     {
@@ -71,13 +71,13 @@ void disable_spi_delays(libusb_device_handle *devhandle, uint8_t channel)  // Di
     }
 }
 
-uint16_t get_current(libusb_device_handle *devhandle)
+uint16_t get_current(libusb_device_handle *devhandle)  // Gets the raw value, corresponding to the measured current, from the LTC2312 ADC
 {
     unsigned char read_command_buf[8] = {
-        0x00, 0x00,                    // Reserved
-        0x00,                          // Read command
-        0x00,                          // Reserved
-        0x02, 0x00, 0x00, 0x00,        // Two bytes to read
+        0x00, 0x00,             // Reserved
+        0x00,                   // Read command
+        0x00,                   // Reserved
+        0x02, 0x00, 0x00, 0x00  // Two bytes to read
     };
     unsigned char read_input_buf[2];
     int bytes_read, bytes_written;
@@ -175,8 +175,8 @@ void select_cs(libusb_device_handle *devhandle, uint8_t channel)  // Enables the
 void set_gpio1(libusb_device_handle *devhandle, bool value)  // Sets the GPIO.1 pin on the CP2130 to a given value
 {
     unsigned char control_buf_out[4] = {
-        0x00, 0xFF * value,  // Set the value of GPIO.1 to the intended value
-        0x00, 0x10           // Set the mask so that only GPIO.1 is changed
+        0x00, (uint8_t)(value << 4),  // Set the value of GPIO.1 to the intended value
+        0x00, 0x10                    // Set the mask so that only GPIO.1 is changed
     };
     if (libusb_control_transfer(devhandle, 0x40, 0x21, 0x0000, 0x0000, control_buf_out, sizeof(control_buf_out), TR_TIMEOUT) != sizeof(control_buf_out))
     {
@@ -188,8 +188,8 @@ void set_gpio1(libusb_device_handle *devhandle, bool value)  // Sets the GPIO.1 
 void set_gpio2(libusb_device_handle *devhandle, bool value)  // Sets the GPIO.2 pin on the CP2130 to a given value
 {
     unsigned char control_buf_out[4] = {
-        0x00, 0xFF * value,  // Set the value of GPIO.2 to the intended value
-        0x00, 0x20           // Set the mask so that only GPIO.2 is changed
+        0x00, (uint8_t)(value << 5),  // Set the value of GPIO.2 to the intended value
+        0x00, 0x20                    // Set the mask so that only GPIO.2 is changed
     };
     if (libusb_control_transfer(devhandle, 0x40, 0x21, 0x0000, 0x0000, control_buf_out, sizeof(control_buf_out), TR_TIMEOUT) != sizeof(control_buf_out))
     {

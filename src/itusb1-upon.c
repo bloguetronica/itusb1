@@ -1,5 +1,5 @@
-/* ITUSB1 UPOn Command - Version 1.0 for Debian Linux
-   Copyright (c) 2019 Samuel Lourenço
+/* ITUSB1 UPOn Command - Version 1.1 for Debian Linux
+   Copyright (c) 2019-2020 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the Free
@@ -63,7 +63,7 @@ int main(int argc, char **argv)
             else  // If the interface is successfully claimed
             {
                 set_gpio1(devhandle, false);  // Set GPIO.1 to a logical low in order to switch VBUS on
-                if (err_level == 0)  // If all goes well
+                if (err_level == EXIT_SUCCESS)  // If all goes well
                     printf("USB power enabled.\n");
                 libusb_release_interface(devhandle, 0);  // Release the interface
             }

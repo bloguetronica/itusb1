@@ -1,5 +1,5 @@
-/* ITUSB1 LockOTP Command - Version 1.0 for Debian Linux
-   Copyright (c) 2019 Samuel Lourenço
+/* ITUSB1 LockOTP Command - Version 1.1 for Debian Linux
+   Copyright (c) 2019-2020 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the Free
@@ -68,9 +68,9 @@ int main(int argc, char **argv)
                 }
                 else  // If the interface is successfully claimed
                 {
-                    if (is_otp_locked(devhandle) && err_level == 0)  // Check if the OTP ROM is locked (err_level can change to 1 as a consequence of that verification, hence the need for "&& err_level == 0" in order to avoid misleading messages)
+                    if (is_otp_locked(devhandle) && err_level == EXIT_SUCCESS)  // Check if the OTP ROM is locked (err_level can change to "EXIT_FAILURE" as a consequence of that verification, hence the need for "&& err_level == EXIT_SUCCESS" in order to avoid misleading messages)
                         printf("Device OTP ROM is already locked.\n");
-                    else if (err_level == 0)  // If all goes well
+                    else if (err_level == EXIT_SUCCESS)  // If all goes well
                     {
                         printf("Device OTP ROM contains unlocked fields, which can be overwritten.\n");
                         printf("Do you wish to permanently lock all fields? [y/N] ");
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
                         {
                             lock_otp(devhandle);  // Lock the OTP ROM
                             reset(devhandle);  // Reset the device
-                            if (err_level == 0)  // If all goes well
+                            if (err_level == EXIT_SUCCESS)  // If all goes well
                                 printf("Device OTP ROM is now locked.\n");  // Notice that no verification is done after reset, since the device has to be allowed to re-enumerate before getting the updated register values
                         }   
                         else  // If user entered any other character
