@@ -1,5 +1,5 @@
-/* ITUSB1 core functions - Version 1.0
-   Copyright (c) 2019 Samuel Lourenço
+/* ITUSB1 core functions - Version 1.1
+   Copyright (c) 2019-2020 Samuel Lourenço
 
    This library is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published by
