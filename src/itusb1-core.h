@@ -1,5 +1,5 @@
-/* ITUSB1 core functions - Version 1.1
-   Copyright (c) 2019-2020 Samuel Lourenço
+/* ITUSB1 core functions - Version 1.2
+   Copyright (c) 2019-2021 Samuel Lourenço
 
    This library is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published by
@@ -30,6 +30,8 @@
 #define CPOL0 false     // Boolean corresponding to CPOL = 0, applicable to configure_spi_mode()
 #define CPHA0 false     // Boolean corresponding to CPHA = 0, applicable to configure_spi_mode()
 #define CSMODEPP true   // Boolean corresponding to chip select push-pull mode, applicable to configure_spi_mode()
+#define VID 0x10C4      // USB vendor ID
+#define PID 0x8C96      // USB product ID
 
 // Global external variables
 extern int err_level;
@@ -38,10 +40,10 @@ extern int err_level;
 void configure_spi_mode(libusb_device_handle *devhandle, uint8_t channel, bool csmode, uint8_t cfrq, bool cpol, bool cpha);
 void disable_cs(libusb_device_handle *devhandle, uint8_t channel);
 void disable_spi_delays(libusb_device_handle *devhandle, uint8_t channel);
-uint16_t get_current(libusb_device_handle *devhandle);
 bool get_gpio1(libusb_device_handle *devhandle);
 bool get_gpio2(libusb_device_handle *devhandle);
 bool get_gpio3(libusb_device_handle *devhandle);
+uint16_t get_raw_current(libusb_device_handle *devhandle);
 bool is_otp_locked(libusb_device_handle *devhandle);
 void lock_otp(libusb_device_handle *devhandle);
 void reset(libusb_device_handle *devhandle);

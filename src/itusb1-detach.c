@@ -1,5 +1,5 @@
-/* ITUSB1 Detach Command - Version 1.1 for Debian Linux
-   Copyright (c) 2019-2020 Samuel Lourenço
+/* ITUSB1 Detach Command - Version 1.2 for Debian Linux
+   Copyright (c) 2019-2021 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the Free
@@ -27,58 +27,59 @@
 #include "itusb1-core.h"
 #include "libusb-extra.h"
 
+// Function prototypes
+void detach(libusb_device_handle *devhandle);
+
 int main(int argc, char **argv)
 {
     err_level = EXIT_SUCCESS;  // Note that this variable is declared externally!
     libusb_context *context;
-    if (libusb_init(&context) != 0)  // Initialize libusb. In case of failure
-    {
+    if (libusb_init(&context) != 0) {  // Initialize libusb. In case of failure
         fprintf(stderr, "Error: Could not initialize libusb.\n");
         err_level = EXIT_FAILURE;
-    }
-    else  // If libusb is initialized
-    {
+    } else {  // If libusb is initialized
         libusb_device_handle *devhandle;
-        if (argc < 2)  // If the program was called without arguments
-            devhandle = libusb_open_device_with_vid_pid(context, 0x10C4, 0x8C96);  // Open a device and get the device handle
-        else  // Serial number was specified as argument
-            devhandle = libusb_open_device_with_vid_pid_serial(context, 0x10C4, 0x8C96, (unsigned char *)argv[1]);  // Open the device having the specified serial number, and get the device handle
-        if (devhandle == NULL)  // If the previous operation fails to get a device handle
-        {
+        if (argc < 2) {  // If the program was called without arguments
+            devhandle = libusb_open_device_with_vid_pid(context, VID, PID);  // Open a device and get the device handle
+        } else {  // Serial number was specified as argument
+            devhandle = libusb_open_device_with_vid_pid_serial(context, VID, PID, (unsigned char *)argv[1]);  // Open the device having the specified serial number, and get the device handle
+        }
+        if (devhandle == NULL) {  // If the previous operation fails to get a device handle
             fprintf(stderr, "Error: Could not find device.\n");
             err_level = EXIT_FAILURE;
-        }
-        else  // If the device is successfully opened and a handle obtained
-        {
+        } else {  // If the device is successfully opened and a handle obtained
             bool kernel_attached = false;
-            if (libusb_kernel_driver_active(devhandle, 0) != 0)  // If a kernel driver is active on the interface
-            {
+            if (libusb_kernel_driver_active(devhandle, 0) != 0) {  // If a kernel driver is active on the interface
                 libusb_detach_kernel_driver(devhandle, 0);  // Detach the kernel driver
                 kernel_attached = true;  // Flag that the kernel driver was attached
             }
-            if (libusb_claim_interface(devhandle, 0) != 0)  // Claim the interface. In case of failure
-            {
+            if (libusb_claim_interface(devhandle, 0) != 0) {  // Claim the interface. In case of failure
                 fprintf(stderr, "Error: Device is currently unavailable.\n");
                 err_level = EXIT_FAILURE;
-            }
-            else  // If the interface is successfully claimed
-            {
-                if (!get_gpio1(devhandle) || !get_gpio2(devhandle))  // If GPIO.1 or GPIO.2, or both, are set to a logical low
-                {
-                    set_gpio2(devhandle, true);  // Set GPIO.2 to a logical high so that the data lines are disconnected
-                    usleep(100000);  // Wait 100ms in order to emulate a manual detachment of the device
-                    set_gpio1(devhandle, true);  // Set GPIO.1 to a logical high to switch VBUS off
-                    usleep(100000);  // Wait 100ms to allow for device shutdown
-                }
-                if (err_level == EXIT_SUCCESS)  // If all goes well
+            } else {  // If the interface is successfully claimed
+                detach(devhandle);  // Detach DUT from HUT
+                if (err_level == EXIT_SUCCESS) {  // If all goes well
                     printf("USB device detached.\n");
+                }
                 libusb_release_interface(devhandle, 0);  // Release the interface
             }
-            if (kernel_attached)  // If a kernel driver was attached to the interface before
+            if (kernel_attached) {  // If a kernel driver was attached to the interface before
                 libusb_attach_kernel_driver(devhandle, 0);  // Reattach the kernel driver
+            }
             libusb_close(devhandle);  // Close the device
         }
         libusb_exit(context);  // Deinitialize libusb
     }
     return err_level;
+}
+
+// Detaches the DUT (device under test) from the HUT (host under test)
+void detach(libusb_device_handle *devhandle)
+{
+    if (!get_gpio1(devhandle) || !get_gpio2(devhandle)) {  // If GPIO.1 or GPIO.2, or both, are set to a logical low
+        set_gpio2(devhandle, true);  // Set GPIO.2 to a logical high so that the data lines are disconnected
+        usleep(100000);  // Wait 100ms in order to emulate a manual detachment of the device
+        set_gpio1(devhandle, true);  // Set GPIO.1 to a logical high to switch VBUS off
+        usleep(100000);  // Wait 100ms to allow for device shutdown
+    }
 }
