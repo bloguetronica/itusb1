@@ -50,8 +50,12 @@ int main(int argc, char **argv)
                 if (cin == 'Y' || cin == 'y') {  // If user entered "Y" or "y"
                     cp2130.lockOTP(errcnt, errstr);  // Lock the OTP ROM
                     cp2130.reset(errcnt, errstr);  // Reset the device
-                    if (errcnt > 0) {  // If all goes well
-                        printErrors(errstr);
+                    if (errcnt > 0) {  // In case of error
+                        if (cp2130.disconnected()) {  // If the device disconnected
+                            printErrors("Device disconnected.\n");
+                        } else {
+                            printErrors(errstr);
+                        }
                         errlvl = EXIT_FAILURE;
                     } else {  // Operation successful
                         std::cout << "Device OTP ROM is now locked." << std::endl;  // Notice that no verification is done after reset, since the device has to be allowed to re-enumerate before getting the updated register values
@@ -60,7 +64,11 @@ int main(int argc, char **argv)
                     std::cout << "Lock operation canceled." << std::endl;
                 }
             } else {
-                printErrors(errstr);
+                if (cp2130.disconnected()) {  // If the device disconnected
+                    printErrors("Device disconnected.\n");
+                } else {
+                    printErrors(errstr);
+                }
                 errlvl = EXIT_FAILURE;
             }
             cp2130.close();
