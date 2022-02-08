@@ -21,6 +21,7 @@
 // Includes
 #include <cstdlib>
 #include <iostream>
+#include <string>
 #include "cp2130.h"
 #include "error.h"
 #include "itusb1device.h"
@@ -52,7 +53,7 @@ int main(int argc, char **argv)
                     cp2130.reset(errcnt, errstr);  // Reset the device
                     if (errcnt > 0) {  // In case of error
                         if (cp2130.disconnected()) {  // If the device disconnected
-                            printErrors("Device disconnected.\n");
+                            std::cerr << "Device disconnected.\n";
                         } else {
                             printErrors(errstr);
                         }
@@ -65,7 +66,7 @@ int main(int argc, char **argv)
                 }
             } else {
                 if (cp2130.disconnected()) {  // If the device disconnected
-                    printErrors("Device disconnected.\n");
+                    std::cerr << "Device disconnected.\n";
                 } else {
                     printErrors(errstr);
                 }
@@ -74,11 +75,11 @@ int main(int argc, char **argv)
             cp2130.close();
         } else {  // Failed to open device
             if (err == ITUSB1Device::ERROR_INIT) {  // Failed to initialize libusb
-                printErrors("Could not initialize libusb\n");
+                std::cerr << "Could not initialize libusb\n";
             } else if (err == ITUSB1Device::ERROR_NOT_FOUND) {  // Failed to find device
-                printErrors("Could not find device.\n");
+                std::cerr << "Could not find device.\n";
             } else if (err == ITUSB1Device::ERROR_BUSY) {  // Failed to claim interface
-                printErrors("Device is currently unavailable.\n");
+                std::cerr << "Device is currently unavailable.\n";
             }
             errlvl = EXIT_FAILURE;
         }
