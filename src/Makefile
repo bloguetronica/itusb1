@@ -1,5 +1,5 @@
 # Makefile for all ITUSB1 commands, Debian Linux (GCC)
-# Copyright (c) 2019 Samuel Lourenço
+# Copyright (c) 2019-2022 Samuel Lourenço
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,21 +19,26 @@
 
 
 CC = gcc
-CFLAGS = -O2 -std=gnu99 -Wall -pedantic
+CFLAGS = -O2 -std=c11 -Wall -pedantic
+CXX = g++
+CXXFLAGS = -O2 -std=c++11 -Wall -pedantic
 LDFLAGS = -s
 LDLIBS = -lusb-1.0
-OBJECTS = itusb1-core.o libusb-extra.o
-TARGETS = itusb1-attach itusb1-detach itusb1-list itusb1-lockotp itusb1-reset itusb1-status itusb1-udoff itusb1-udon itusb1-upoff itusb1-upon
+OBJECTS = cp2130.o error.o itusb1device.o libusb-extra.o
+TARGETS = itusb1-list itusb1-lockotp itusb1-reset
 
 .PHONY: all clean install uninstall
 
 all: $(TARGETS)
 
 $(TARGETS): % : %.o $(OBJECTS)
-	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
+	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
+	
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $<
 
 clean:
 	$(RM) *.o $(TARGETS)
