@@ -40,10 +40,9 @@ int main(int argc, char **argv)
     if (err == ITUSB1Device::SUCCESS) {  // Device was successfully opened
         int errcnt = 0;
         std::string errstr;
-        std::wstring_convert<std::codecvt_utf8<char16_t>, char16_t> converter;
-        std::string manufacturer = converter.to_bytes(device.getManufacturerDesc(errcnt, errstr));  // Manufacturer descriptor
-        std::string product = converter.to_bytes(device.getProductDesc(errcnt, errstr));  // Product descriptor
-        std::string serial = converter.to_bytes(device.getSerialDesc(errcnt, errstr));  // Serial number descriptor
+        std::u16string manufacturer = device.getManufacturerDesc(errcnt, errstr);  // Manufacturer descriptor
+        std::u16string product = device.getProductDesc(errcnt, errstr);  // Product descriptor
+        std::u16string serial = device.getSerialDesc(errcnt, errstr);  // Serial number descriptor
         CP2130::USBConfig config = device.getUSBConfig(errcnt, errstr);  // USB configuration
         if (errcnt > 0) {  // In case of error
             if (device.disconnected()) {  // If the device disconnected
@@ -53,9 +52,10 @@ int main(int argc, char **argv)
             }
             errlvl = EXIT_FAILURE;
         } else {  // Operation successful
-            std::cout << "Manufacturer: " << manufacturer << std::endl;  // Print manufacturer string
-            std::cout << "Product: " << product << std::endl;  // Print product string
-            std::cout << "Serial number: " << serial << std::endl;  // Print serial number string
+            std::wstring_convert<std::codecvt_utf8<char16_t>, char16_t> converter;
+            std::cout << "Manufacturer: " << converter.to_bytes(manufacturer) << std::endl;  // Print manufacturer string
+            std::cout << "Product: " << converter.to_bytes(product) << std::endl;  // Print product string
+            std::cout << "Serial number: " << converter.to_bytes(serial) << std::endl;  // Print serial number string
             std::cout << "Hardware revision: " << ITUSB1Device::hardwareRevision(config) << " [0x" << std::hex << std::setfill ('0') << std::setw(4) << (config.majrel << 8 | config.minrel) << std::dec << "]" << std::endl;  // Print hardware revision
             std::cout << "Maximum power consumption: " << 2 * config.maxpow << "mA [0x" << std::hex << std::setw(2) << static_cast<int>(config.maxpow) << "]" << std::endl;  // Print maximum power consumption
         }
