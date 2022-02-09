@@ -1,17 +1,22 @@
 This directory contains all source code files required for compiling the
 commands for ITUSB1 USB Test Switch. A list of relevant files follows:
-– itusb1-attach.c;
-– itusb1-core.c;
-– itusb1-core.h;
-– itusb1-detach.h;
-– itusb1-list.c;
-– itusb1-lockotp.c;
-– itusb1-reset.c;
-– itusb1-status.c;
-– itusb1-udoff.c;
-– itusb1-udon.c;
-– itusb1-upoff.c;
-– itusb1-upon.c;
+– cp2130.cpp;
+– cp2130.h;
+– error.cpp;
+– error.h;
+– itusb1-attach.cpp;
+– itusb1-detach.cpp;
+– itusb1-info.cpp;
+– itusb1-list.cpp;
+– itusb1-lockotp.cpp;
+– itusb1-reset.cpp;
+– itusb1-status.cpp;
+– itusb1-udoff.cpp;
+– itusb1-udon.cpp;
+– itusb1-upoff.cpp;
+– itusb1-upon.cpp;
+– itusb1device.cpp;
+– itusb1device.h;
 – libusb-extra.c;
 – libusb-extra.h;
 – Makefile.
