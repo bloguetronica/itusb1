@@ -25,7 +25,7 @@ CXXFLAGS = -O2 -std=c++11 -Wall -pedantic
 LDFLAGS = -s
 LDLIBS = -lusb-1.0
 OBJECTS = cp2130.o error.o itusb1device.o libusb-extra.o
-TARGETS = itusb1-attach itusb1-detach itusb1-list itusb1-lockotp itusb1-reset itusb1-udoff itusb1-udon itusb1-upoff itusb1-upon
+TARGETS = itusb1-attach itusb1-detach itusb1-info itusb1-list itusb1-lockotp itusb1-reset itusb1-status itusb1-udoff itusb1-udon itusb1-upoff itusb1-upon
 
 .PHONY: all clean install uninstall
 
