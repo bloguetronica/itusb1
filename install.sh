@@ -6,19 +6,24 @@ apt-get -qq install build-essential
 apt-get -qq install libusb-1.0-0-dev
 echo Copying source code files...
 mkdir -p /usr/local/src/itusb1
-cp -f src/itusb1-attach.c /usr/local/src/itusb1/.
-cp -f src/itusb1-core.c /usr/local/src/itusb1/.
-cp -f src/itusb1-core.h /usr/local/src/itusb1/.
-cp -f src/itusb1-detach.c /usr/local/src/itusb1/.
-cp -f src/itusb1-list.c /usr/local/src/itusb1/.
-cp -f src/itusb1-lockotp.c /usr/local/src/itusb1/.
-cp -f src/itusb1-reset.c /usr/local/src/itusb1/.
-cp -f src/itusb1-status.c /usr/local/src/itusb1/.
-cp -f src/itusb1-udoff.c /usr/local/src/itusb1/.
-cp -f src/itusb1-udon.c /usr/local/src/itusb1/.
-cp -f src/itusb1-upoff.c /usr/local/src/itusb1/.
-cp -f src/itusb1-upon.c /usr/local/src/itusb1/.
+cp -f src/cp2130.cpp /usr/local/src/itusb1/.
+cp -f src/cp2130.h /usr/local/src/itusb1/.
+cp -f src/error.cpp /usr/local/src/itusb1/.
+cp -f src/error.h /usr/local/src/itusb1/.
 cp -f src/GPL.txt /usr/local/src/itusb1/.
+cp -f src/itusb1-attach.cpp /usr/local/src/itusb1/.
+cp -f src/itusb1-detach.cpp /usr/local/src/itusb1/.
+cp -f src/itusb1device.cpp /usr/local/src/itusb1/.
+cp -f src/itusb1device.h /usr/local/src/itusb1/.
+cp -f src/itusb1-info.cpp /usr/local/src/itusb1/.
+cp -f src/itusb1-list.cpp /usr/local/src/itusb1/.
+cp -f src/itusb1-lockotp.cpp /usr/local/src/itusb1/.
+cp -f src/itusb1-reset.cpp /usr/local/src/itusb1/.
+cp -f src/itusb1-status.cpp /usr/local/src/itusb1/.
+cp -f src/itusb1-udoff.cpp /usr/local/src/itusb1/.
+cp -f src/itusb1-udon.cpp /usr/local/src/itusb1/.
+cp -f src/itusb1-upoff.cpp /usr/local/src/itusb1/.
+cp -f src/itusb1-upon.cpp /usr/local/src/itusb1/.
 cp -f src/LGPL.txt /usr/local/src/itusb1/.
 cp -f src/libusb-extra.c /usr/local/src/itusb1/.
 cp -f src/libusb-extra.h /usr/local/src/itusb1/.
@@ -30,6 +35,7 @@ echo Installing man pages...
 mkdir -p /usr/local/share/man/man1
 cp -f man/itusb1-attach.1.gz /usr/local/share/man/man1/.
 cp -f man/itusb1-detach.1.gz /usr/local/share/man/man1/.
+cp -f man/itusb1-info.1.gz /usr/local/share/man/man1/.
 cp -f man/itusb1-list.1.gz /usr/local/share/man/man1/.
 cp -f man/itusb1-lockotp.1.gz /usr/local/share/man/man1/.
 cp -f man/itusb1-reset.1.gz /usr/local/share/man/man1/.

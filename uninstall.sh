@@ -6,6 +6,7 @@ service udev restart
 echo Removing man pages...
 rm -f /usr/local/share/man/man1/itusb1-attach.1.gz
 rm -f /usr/local/share/man/man1/itusb1-detach.1.gz
+rm -f /usr/local/share/man/man1/itusb1-info.1.gz
 rm -f /usr/local/share/man/man1/itusb1-list.1.gz
 rm -f /usr/local/share/man/man1/itusb1-lockotp.1.gz
 rm -f /usr/local/share/man/man1/itusb1-reset.1.gz
