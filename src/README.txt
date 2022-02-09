@@ -6,6 +6,8 @@ commands for ITUSB1 USB Test Switch. A list of relevant files follows:
 – error.h;
 – itusb1-attach.cpp;
 – itusb1-detach.cpp;
+– itusb1device.cpp;
+– itusb1device.h;
 – itusb1-info.cpp;
 – itusb1-list.cpp;
 – itusb1-lockotp.cpp;
@@ -15,8 +17,6 @@ commands for ITUSB1 USB Test Switch. A list of relevant files follows:
 – itusb1-udon.cpp;
 – itusb1-upoff.cpp;
 – itusb1-upon.cpp;
-– itusb1device.cpp;
-– itusb1device.h;
 – libusb-extra.c;
 – libusb-extra.h;
 – Makefile.
