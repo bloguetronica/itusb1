@@ -23,6 +23,7 @@
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
+#include <locale>
 #include <string>
 #include "cp2130.h"
 #include "error.h"
