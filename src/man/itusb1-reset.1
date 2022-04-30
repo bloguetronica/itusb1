@@ -1,0 +1,21 @@
+.TH ITUSB1-RESET 1
+.SH NAME
+itusb1-reset \- reset ITUSB1 USB Test Switch
+.SH SYNOPSIS
+.B itusb1-reset
+.RI [ SERIALNUMBER ]
+.SH DESCRIPTION
+.B itusb1-reset
+issues a reset command to the USB test switch, causing it to power cycle. After
+reset, the USB power and data lines will be in a disconnected state.
+
+Specifying a serial number is optional.
+.SH "EXIT STATUS"
+Exits with a status of zero in case of success. Returns one should an error
+occur.
+.SH AUTHOR
+Samuel Lourenço (samuel.fmlourenco@gmail.com).
+.SH "SEE ALSO"
+itusb1-attach(1), itusb1-detach(1), itusb1-info(1), itusb1-list(1),
+itusb1-lockotp(1), itusb1-status(1), itusb1-udoff(1), itusb1-udon(1),
+itusb1-upoff(1), itusb1-upon(1)
