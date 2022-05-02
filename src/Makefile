@@ -18,20 +18,13 @@
 # Please feel free to contact me via e-mail: samuel.fmlourenco@gmail.com
 
 
-prefix = /usr/local
-
 CC = gcc
 CFLAGS = -O2 -std=c11 -Wall -pedantic
 CXX = g++
 CXXFLAGS = -O2 -std=c++11 -Wall -pedantic
 LDFLAGS = -s
 LDLIBS = -lusb-1.0
-MANPAGES = itusb1-attach.1 itusb1-detach.1 itusb1-info.1 itusb1-list.1 itusb1-lockotp.1 itusb1-reset.1 itusb1-status.1 itusb1-udoff.1 itusb1-udon.1 itusb1-upoff.1 itusb1-upon.1
-MANPAGESGZ = $(MANPAGES:=.gz)
-MKDIR = mkdir -p
-MV = mv -f
 OBJECTS = cp2130.o error.o itusb1device.o libusb-extra.o
-RMDIR = rmdir --ignore-fail-on-non-empty
 TARGETS = itusb1-attach itusb1-detach itusb1-info itusb1-list itusb1-lockotp itusb1-reset itusb1-status itusb1-udoff itusb1-udon itusb1-upoff itusb1-upon
 
 .PHONY: all clean install uninstall
@@ -43,7 +36,7 @@ $(TARGETS): % : %.o $(OBJECTS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
-
+	
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
