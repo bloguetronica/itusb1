@@ -1,0 +1,30 @@
+.TH ITUSB1-STATUS 1
+.SH NAME
+itusb1-status \- show ITUSB1 USB Test Switch status
+.SH SYNOPSIS
+.B itusb1-status
+.RI [ SERIALNUMBER ]
+.SH DESCRIPTION
+.B itusb1-status
+shows the status of the USB test switch, giving detailed information. You can
+use
+.B itusb1-status
+to see which lines are connected or to measure the current being consumed by
+the device under test (DUT). This command will also indicate if the
+consumption current exceeds the 500mA limit as per the USB 2.0 specification,
+by displaying "(OC)" next to the value. Note that, if the current meets or
+exceeds 1000mA, the value will be displayed as "out of limits" by the use of
+the acronym "OL". In that case, the possible over-current condition might trip
+the inbuilt current limit protection, triggering a generic fault warning as
+well.
+
+Specifying a serial number is optional.
+.SH "EXIT STATUS"
+Exits with a status of zero in case of success. Returns one should an error
+occur.
+.SH AUTHOR
+Samuel Lourenço (samuel.fmlourenco@gmail.com).
+.SH "SEE ALSO"
+itusb1-attach(1), itusb1-detach(1), itusb1-info(1), itusb1-list(1),
+itusb1-lockotp(1), itusb1-reset(1), itusb1-udoff(1), itusb1-udon(1),
+itusb1-upoff(1), itusb1-upon(1)
