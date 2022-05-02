@@ -19,26 +19,15 @@ commands for ITUSB1 USB Test Switch. A list of relevant files follows:
 – itusb1-upon.cpp;
 – libusb-extra.c;
 – libusb-extra.h;
-– man/itusb1-attach.1;
-– man/itusb1-detach.1;
-– man/itusb1-info.1;
-– man/itusb1-list.1;
-– man/itusb1-lockotp.1;
-– man/itusb1-reset.1;
-– man/itusb1-status.1;
-– man/itusb1-udoff.1;
-– man/itusb1-udon.1;
-– man/itusb1-upoff.1;
-– man/itusb1-upon.1;
 – Makefile.
 
 In order to compile successfully all commands, you must have the packages
 "build-essential" and "libusb-1.0-0-dev" installed. Given that, if you wish to
 simply compile, change your working directory to the current one on a terminal
 window, and simply invoke "make" or "make all". If you wish to install besides
-compiling, run "sudo make install". Alternatively, if you wish to force a
-rebuild, you should invoke "make clean all", or "sudo make clean install" if
-you prefer to install after rebuilding.
+compiling, run "sudo make all install". Alternatively, if you wish to force a
+rebuild, you should invoke "make clean all", or "sudo make clean all install"
+if you prefer to install after rebuilding.
 
 It may be necessary to undo any previous operations. Invoking "make clean"
 will delete all object code generated (binaries included) during earlier
